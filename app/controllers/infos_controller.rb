@@ -1,5 +1,5 @@
 class InfosController < ApplicationController
-    def upload_csv
+    def upload
       return unless info_params[:file].present?
 
       @info = Info.new(name: info_params[:file].original_filename)
@@ -10,7 +10,7 @@ class InfosController < ApplicationController
         ImportProductsWorker.perform_async(path, filename) 
         redirect_to root_path, notice: 'All Data have been uploaded!'
       else
-        flash[:success] = "Файл был отклонен"
+        flash[:success] = "File was rejected!"
         redirect_to :back
       end
     end
